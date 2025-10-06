@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coach - Pro Training</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="menu-overlay" onclick="toggleMenu()"></div>
+    
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <img src="images/logo.png" alt="Coach - Pro Training" class="logo-img">
+            </div>
+            <ul class="nav-menu">
+                <li><a class="nav-link active" onclick="showPage('carnet')">Carnet</a></li>
+                <li><a class="nav-link" onclick="showPage('chrono')">Chronomètre</a></li>
+                <li><a class="nav-link" onclick="showPage('calc1rm')">Calcul 1RM</a></li>
+            </ul>
+            <div class="burger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Calcul 1RM -->
+    <div id="calc1rm" class="page">
+        <h1>Calculateur 1RM</h1>
+        <div class="container">
+            <div class="card">
+                <h2>Calcul des pourcentages</h2>
+                <div class="input-group">
+                    <label for="oneRM">Entre ton 1RM (kg) :</label>
+                    <input type="number" id="oneRM" placeholder="Ex : 100" oninput="calculate()">
+                </div>
+                
+                <div class="percentage-grid">
+                    <div class="percentage-item">
+                        <div class="percentage-label">60%</div>
+                        <div class="percentage-value"><span id="p60">0</span> kg</div>
+                    </div>
+                    <div class="percentage-item">
+                        <div class="percentage-label">65%</div>
+                        <div class="percentage-value"><span id="p65">0</span> kg</div>
+                    </div>
+                    <div class="percentage-item">
+                        <div class="percentage-label">70%</div>
+                        <div class="percentage-value"><span id="p70">0</span> kg</div>
+                    </div>
+                    <div class="percentage-item">
+                        <div class="percentage-label">75%</div>
+                        <div class="percentage-value"><span id="p75">0</span> kg</div>
+                    </div>
+                    <div class="percentage-item">
+                        <div class="percentage-label">80%</div>
+                        <div class="percentage-value"><span id="p80">0</span> kg</div>
+                    </div>
+                    <div class="percentage-item">
+                        <div class="percentage-label">85%</div>
+                        <div class="percentage-value"><span id="p85">0</span> kg</div>
+                    </div>
+                    <div class="percentage-item">
+                        <div class="percentage-label">90%</div>
+                        <div class="percentage-value"><span id="p90">0</span> kg</div>
+                    </div>
+                    <div class="percentage-item">
+                        <div class="percentage-label">95%</div>
+                        <div class="percentage-value"><span id="p95">0</span> kg</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Chronomètre -->
+    <div id="chrono" class="page">
+        <h1>Chronomètre de repos</h1>
+        <div class="container">
+            <div class="card">
+                <h2>Timer</h2>
+                
+                <div class="timer-buttons">
+                    <button onclick="startTimer(30)">30s</button>
+                    <button onclick="startTimer(45)">45s</button>
+                    <button onclick="startTimer(60)">1min</button>
+                    <button onclick="startTimer(90)">1m30</button>
+                    <button onclick="startTimer(120)">2min</button>
+                    <button onclick="startTimer(180)">3min</button>
+                </div>
+
+                <div class="custom-timer">
+                    <input type="number" id="customTime" placeholder="Temps personnalisé (sec)" min="1">
+                    <button onclick="startCustomTimer()">Go</button>
+                </div>
+
+                <div id="countdown">00:00</div>
+
+                <div class="control-buttons">
+                    <button class="btn-pause" onclick="togglePause()"><span id="pauseText">Pause</span></button>
+                    <button class="btn-stop" onclick="stopTimer()">Stop</button>
+                    <button class="btn-repeat" onclick="repeatTimer()">Répéter</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="stat-label">Séries complétées</div>
+                        <div class="stat-value" id="setsCompleted">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Temps total repos</div>
+                        <div class="stat-value" id="totalRestTime">0s</div>
+                    </div>
+                </div>
+
+                <div class="history" id="history"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page Carnet -->
+    <div id="carnet" class="page active">
+        <h1>Carnet d'Entraînement</h1>
+        <div class="container">
+            <div class="card full-width">
+                <h2>Cycle VOLUME</h2>
+                
+                <div class="program-info">
+                    <div class="info-badge">
+                        <span class="info-label">Phase:</span>
+                        <span class="info-value">Phase 1 (Semaines 1-4)</span>
+                    </div>
+                    <div class="info-badge">
+                        <span class="info-label">Objectif:</span>
+                        <span class="info-value">Hypertrophie - Volume</span>
+                    </div>
+                </div>
+
+                <div class="week-selector">
+                    <button class="week-btn active" onclick="selectWeek(1)">Semaine 1</button>
+                    <button class="week-btn" onclick="selectWeek(2)">Semaine 2</button>
+                    <button class="week-btn" onclick="selectWeek(3)">Semaine 3</button>
+                    <button class="week-btn" onclick="selectWeek(4)">Semaine 4</button>
+                </div>
+
+                <div class="session-selector">
+                    <button class="session-btn active" onclick="selectSession(1)">Séance 1<br><small>Pecs/Épaules/Triceps</small></button>
+                    <button class="session-btn" onclick="selectSession(2)">Séance 2<br><small>Jambes/Mollets/Core</small></button>
+                    <button class="session-btn" onclick="selectSession(3)">Séance 3<br><small>Dos/Biceps/Core</small></button>
+                </div>
+
+                <div id="workoutContent" class="workout-content"></div>
+
+                <div class="workout-actions">
+                    <button class="btn-save" onclick="saveWorkout()">Sauvegarder</button>
+                    <button class="btn-reset" onclick="resetWorkout()">Réinitialiser</button>
+                    <button class="btn-export" onclick="exportWorkout()">Exporter</button>
+                </div>
+            </div>
+
+            <div class="card full-width">
+                <h2>Statistiques & Progression</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">Séances complétées</div>
+                        <div class="stat-value" id="totalSessions">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Cette semaine</div>
+                        <div class="stat-value" id="weekSessions">0/3</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Volume total (kg)</div>
+                        <div class="stat-value" id="totalVolume">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">Progression</div>
+                        <div class="stat-value" id="progression">0%</div>
+                    </div>
+                </div>
+
+                <div class="notes-section">
+                    <h3>Notes de séance</h3>
+                    <textarea id="sessionNotes" placeholder="Ajoute tes notes, ressentis, observations..."></textarea>
+                    <button class="btn-save-notes" onclick="saveNotes()">Sauvegarder les notes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p><strong>Coach</strong> - Pro Training</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Pas d'Entraînement, pas de résultats</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">À propos</a>
+                <a href="#" class="footer-link">Contact</a>
+                <a href="#" class="footer-link">Confidentialité</a>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.8rem; color: #666;">© 2025 Coach - doko972 - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <audio id="beep" src="https://actions.google.com/sounds/v1/alarms/medium_bell_ringing_near.ogg"></audio>
+
+<script src="scripts.js"></script>
+</body>
+</html>
